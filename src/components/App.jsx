@@ -57,8 +57,10 @@ export default class App extends Component {
     this.loadContacts();
   }
 
-  componentDidUpdate() {
-    this.saveContacts();
+  componentDidUpdate(_, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
   }
   render() {
     const { filter } = this.state;
