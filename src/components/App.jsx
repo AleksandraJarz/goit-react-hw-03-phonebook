@@ -30,15 +30,23 @@ export default class App extends Component {
       contacts: prevState.contacts.filter(contact => contact.id !== contactId),
     }));
   };
-
+  findContact = name => {
+    const { contacts } = this.state;
+    const normalizedName = name.toLowerCase();
+    return contacts.find(({ name }) => name.toLowerCase() === normalizedName);
+  };
   handleChangeFilter = evt => {
     this.setState({ filter: evt.target.value });
   };
 
   getFilteredContacts = () => {
     const { contacts, filter } = this.state;
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
+    const normalizedFilter = filter.toLowerCase();
+
+    return contacts.filter(
+      contact =>
+        contact.name.toLowerCase().includes(normalizedFilter) ||
+        contact.number.includes(normalizedFilter)
     );
   };
 
